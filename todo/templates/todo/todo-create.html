@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'todo/todo-create.css' %}">
+{% endblock %}
+
+{% block title %}Create Todo{% endblock %}
+
+{% block content %}
+  <section>
+    <h1>Create Todo</h1>
+
+    <form action={% url 'create-todo-page' %} method='POST' class='create-form'>
+      {% csrf_token %}
+      {% for form_field in form  %}
+        <div class='form-field'>
+          {{ form_field.label_tag }}
+          {{ form_field }}
+          {{ form_field.errors }}
+        </div>
+      {% endfor %}
+      <button>Save</button>
+    </form>
+
+  </section>
+{% endblock %}

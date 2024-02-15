@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'todo/todo-list.css' %}">
+{% endblock %}
+
+{% block title %}My ToDo{% endblock %}
+
+{% block content %}
+  <section id='todo-section'>
+    <h1>ToDo List</h1>
+
+    <ul class='todo-section__list'>
+      {% if not todos %}
+        <p>No List</p>
+      {% else %}
+        {% for todo in todos %}
+          <li class='todo-item'>
+            <p class='todo-item__title'>{{ todo.text }}</p>
+            <div class='todo-item__labels'>
+              <span>{{ todo.status_display }}</span>
+              <a href={% url 'todo-detail-page' todo.id %}>See Detail</a>
+            </div>
+          </li>
+        {% endfor %}
+      {% endif %}
+    </ul>
+  </section>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+  <link rel="stylesheet" href={% static 'todo/todo-detail.css' %}>
+{% endblock %}
+
+{% block title %}Todo Detail{% endblock %}
+
+{% block content %}
+  <section class='card'>
+    <h1>{{ todo.text }}</h1>
+    <dl class='todo-status'>
+      <dt>Status:</dt>
+      <dd>{{ todo.status_display }}</dd>
+    </dl>
+    <dl class='todo-status'>
+      <dt>Updated at:</dt>
+      <dd>{{ todo.date|date:'G:i D d M Y' }}(PST)</dd>
+    </dl>
+
+    <hr />
+    <form action={% url 'update' todo.id %} method='POST' class='update-form'>
+      {% csrf_token %}
+      <div>
+        <label for="todo-status">Status</label>
+        <select name="status" id="todo-status">
+          <option value="1">Done</option>
+          <option value="2">Doing</option>
+          <option value="3">Undone</option>
+        </select>
+      </div>
+      <button>Update</button>
+    </form>
+
+    <hr/>
+    <form action={% url 'delete' todo.id %} method='POST'>
+      {% csrf_token %}
+      <button>Delete</button>
+    </form>
+
+  </section>
+{% endblock %}
